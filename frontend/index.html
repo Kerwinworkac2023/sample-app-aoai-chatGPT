@@ -2,6 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    	<script>
+		function checkAccess() {
+			const deptCode = prompt("Enter your department code:");
+			const secretCode = prompt("Enter your secret code:");
+
+			// Replace with your actual secret code
+			const validSecretCode = "SAM12345"; 
+
+			if (deptCode + secretCode === validSecretCode) {
+				alert("Access granted!");
+
+				// Create custom parameters for deptCode
+				const customParams = JSON.stringify({
+					deptCode: deptCode
+				});
+
+				// Dynamically create the pixel script with custom parameters
+				const pixelScript = document.createElement('script');
+				pixelScript.defer = true;
+				pixelScript.src = 'https://trackifyanalytics.com/pixel/XeOY8nhwyb6OLJU9';
+				pixelScript.setAttribute('data-custom-parameters', customParams);
+				
+				// Append the pixel script to the document
+				document.body.appendChild(pixelScript);
+			} else {
+				alert("Access denied! Invalid department or secret code. Please refresh and login again.");
+				
+				// Make all textareas within ms-TextField-wrapper read-only
+				const textAreaWrappers = document.querySelectorAll('.ms-TextField-wrapper textarea');
+				
+				textAreaWrappers.forEach(textArea => {
+					textArea.readOnly = true; // Set each textarea to readonly
+				});
+			}
+		}
+
+		window.onload = checkAccess;
+	</script>
     <link rel="icon" type="image/x-icon" href="{{ favicon }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title }}</title>
